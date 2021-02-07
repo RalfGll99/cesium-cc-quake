@@ -1,0 +1,22 @@
+{
+  "name": "cesium-cc-quake",
+  "version": "1.0.0",
+  "description": "code challenge cesium",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RalfGll99/cesium-cc-quake.git"
+  },
+  "keywords": [
+    "cc"
+  ],
+  "author": "ralf gutbell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RalfGll99/cesium-cc-quake/issues"
+  },
+  "homepage": "https://github.com/RalfGll99/cesium-cc-quake#readme"
+}
