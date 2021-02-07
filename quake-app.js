@@ -1,12 +1,19 @@
 import DataHandler from "./src/data-handler.js";
+import ButtonHandler from "./src/button-handler.js";
 
 var dataHandler = new DataHandler();
+var buttonHandler = new ButtonHandler();
 
 
 function main() {
+
 $( function() {
+  
+    $( "#accordion" ).accordion();
+  
     $( "button, input, a" ).click( function( event ) {
-        buttonHandler.analyzeTopo();
+        // buttonHandler.analyzeTopo();
+        buttonHandler.assessLocation(viewer);
     } );
   } );
 

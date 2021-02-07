@@ -15,7 +15,7 @@ var ent = viewer.entities.add({
       radii: new Cesium.Cartesian3(mag, mag, mag),
       maximumCone: Cesium.Math.PI_OVER_TWO,
       material: Cesium.Color.BLUE.withAlpha(0.3),
-      outline: true,
+    //   outline: true,
     },
   });
 

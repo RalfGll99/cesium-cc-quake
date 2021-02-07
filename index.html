@@ -18,11 +18,27 @@
     <div class='child flex-child' id="quake-ui" style="flex: 1; ">
 
       <h1>Earthquake investigator</h1>
-      <button id="a" class="ui-button ui-widget ui-corner-all">Select location</button>
+      <button id="a" class="ui-button ui-widget ui-corner-all">Analyze risk at location</button>
   
-    </div>  
+      <div id="accordion">
+        <h3>Location Info</h3>
+        <div>
+          <p id="loca-info">
+          No location selected
+          </p>
+        </div> 
+
+        <h3>Visualization Style</h3>
+        <div>
+          <p>
+            lalal
+          </p>
+        </div> 
+      </div>
+    </div> 
       
     <div class='child flex-child' id="cesiumContainer" style="height: 100%; flex: 3;"></div>
+  </div>
   </div>
 
   <script src="quake-app.js" type="module"></script>
