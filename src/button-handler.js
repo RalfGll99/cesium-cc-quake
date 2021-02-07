@@ -38,7 +38,9 @@ ButtonHandler.prototype.setLocationHoverEffect = function(viewer){
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.TOP,
           pixelOffset: new Cesium.Cartesian2(15, 0),
-          zIndex: 9999
+          zIndex: 9999,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+
         },
       });
     // from Sandcastle
@@ -109,6 +111,13 @@ ButtonHandler.prototype.colorEllipsoides = function (viewer, type) {
         
     }
 }
+
+ButtonHandler.prototype.checkSlope = function (viewer) {
+    console.log("check slope");
+    locationAnalyzer.checkSlope(viewer);
+}
+
+
 
 ButtonHandler.prototype.assessLocation = function (viewer) {
     console.log("assess Location");

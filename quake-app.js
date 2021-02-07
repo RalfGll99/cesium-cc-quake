@@ -17,18 +17,18 @@ $( function() {
     } );
 
     $( "#color-mag" ).click( function( event ) {
-      buttonHandler.colorEllipsoides(viewer, "mag");
-      
+      buttonHandler.colorEllipsoides(viewer, "mag");      
     } );
     $( "#color-reports" ).click( function( event ) {
-      buttonHandler.colorEllipsoides(viewer, "felt");
-      
+      buttonHandler.colorEllipsoides(viewer, "felt");      
     } );
     $( "#color-standard" ).click( function( event ) {
-      buttonHandler.colorEllipsoides(viewer, "");
-      
+      buttonHandler.colorEllipsoides(viewer, "");      
     } );
-
+    $( "#check-slope" ).click( function( event ) {
+      buttonHandler.checkSlope(viewer, "");      
+    } );
+    
 
   } );
 

@@ -1,8 +1,62 @@
 
 var closestQuakeEntity = undefined;
+var position = undefined;
 
 function LocationAnalyzer(options) {
+}
 
+LocationAnalyzer.prototype.checkSlope = function(viewer){
+    
+    if(position != undefined && closestQuakeEntity != undefined){
+        var cartoPos = Cesium.Cartographic.fromCartesian(position);
+        //  check slope in distance of next kilometer in direction of quake
+        var stepSize = 0.00089832 * 0.0174533; //10m steps
+        var cartoPosArray = [];
+        for (let index = -20; index < 20; index+=1) {
+
+            for (let yindex = -10; yindex < 10; yindex+=1) {
+                var newCarto = new Cesium.Cartographic();      
+                newCarto.longitude = cartoPos.longitude + index * stepSize;
+                newCarto.latitude = cartoPos.latitude + yindex * stepSize;
+                cartoPosArray.push(newCarto);
+            }
+            cartoPosArray.push(cartoPos);
+        }
+
+        var terrainProvider = Cesium.createWorldTerrain();
+      
+        var promise = Cesium.sampleTerrainMostDetailed(terrainProvider, cartoPosArray);
+        Cesium.when(promise, function(updatedPositions) {
+            var pickPosHeight = updatedPositions[updatedPositions.length-1].height;
+            const destination = Cesium.Rectangle.fromCartographicArray(updatedPositions);
+            viewer.camera.flyTo({
+                destination,
+            });
+            var heightDiff = 0;
+            updatedPositions.forEach(newCarto => {
+                var currentDiff = Math.abs(newCarto.height - pickPosHeight);
+                if (heightDiff < currentDiff){
+                    heightDiff = newCarto.height;
+                }
+                var newCart = Cesium.Cartographic.toCartesian(newCarto);
+                var color = currentDiff > 50? Cesium.Color.RED : Cesium.Color.GREEN;
+                var e = viewer.entities.add({
+                    position: newCart,
+                    point: {
+                      color: color,
+                      pixelSize: 15,
+                      heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    }
+                });
+            });
+            console.log(heightDiff);
+            if(heightDiff >50){
+                alert("Your position is loacated in a slopy area. If close to an earthquake area.. don't build here")
+            }
+
+        });
+        
+    }
 }
 
 function getClosestQuake(viewer, cartesian){
@@ -27,8 +81,10 @@ function getClosestQuake(viewer, cartesian){
 }
 
 
-LocationAnalyzer.prototype.getGeneralInformation = function (viewer, cartesian) {
 
+
+LocationAnalyzer.prototype.getGeneralInformation = function (viewer, cartesian) {
+    position = cartesian;
     //position info
     var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
     var longitudeString = Cesium.Math.toDegrees(cartographic.longitude).toFixed(2);
@@ -57,6 +113,7 @@ LocationAnalyzer.prototype.getGeneralInformation = function (viewer, cartesian) 
                 "<br> Description: " + closestQuakeEntity.ent.name+
                 "<br> Felt by: " + felt
                 );
+                
       
           } );
     
