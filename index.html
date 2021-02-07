@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="./node_modules/cesium/Build/Cesium/Cesium.js"></script>
+  <link href="./node_modules/cesium/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+</head>
+<body>
+
+  <div class='parent flex-parent' style="display: flex;">
+    <div class='child flex-child' id="quake-ui" style="flex: 1; ">
+
+      <h1>Earthquake investigator</h1>
+      <button id="a" class="ui-button ui-widget ui-corner-all">Select location</button>
+  
+    </div>  
+      
+    <div class='child flex-child' id="cesiumContainer" style="height: 100%; flex: 3;"></div>
+  </div>
+
+  <script>
+    $( function() {
+    $( "button, input, a" ).click( function( event ) {
+      console.log("test");
+
+    } );
+  } );
+
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        // terrainProvider: Cesium.createWorldTerrain()
+    });
+
+  </script>
+</body>
+</html>
