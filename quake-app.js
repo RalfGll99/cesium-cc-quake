@@ -15,7 +15,7 @@ $( function() {
         // terrainProvider: Cesium.createWorldTerrain()
     });
 
-    dataHandler.loadQuakeData(viewer, "");
+    dataHandler.loadQuakeData(viewer, "./data/quake.json");
   
 
 }
