@@ -25,18 +25,7 @@
     <div class='child flex-child' id="cesiumContainer" style="height: 100%; flex: 3;"></div>
   </div>
 
-  <script>
-    $( function() {
-    $( "button, input, a" ).click( function( event ) {
-      console.log("test");
+  <script src="quake-app.js" type="module"></script>
 
-    } );
-  } );
-
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        // terrainProvider: Cesium.createWorldTerrain()
-    });
-
-  </script>
 </body>
 </html>
