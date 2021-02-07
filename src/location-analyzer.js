@@ -7,7 +7,7 @@ function LocationAnalyzer(options) {
 
 function getClosestQuake(viewer, cartesian){
     //reset color if already highlighted
-    if(closestQuakeEntity != undefined){        
+    if(closestQuakeEntity != undefined && closestQuakeEntity.ent.ellipsoid != undefined){        
         closestQuakeEntity.ent.ellipsoid.material = Cesium.Color.BLUE.withAlpha(0.3);
     }
 
@@ -18,7 +18,6 @@ function getClosestQuake(viewer, cartesian){
         var entity = entities[i];
         var d = Cesium.Cartesian3.distance(entity.position.getValue(), cartesian);
 
-        console.log(closestEntity.distance)
         if(closestEntity.distance > d && d != 0 ){
             closestEntity.ent = entity;
             closestEntity.distance = d;
@@ -29,7 +28,6 @@ function getClosestQuake(viewer, cartesian){
 
 
 LocationAnalyzer.prototype.getGeneralInformation = function (viewer, cartesian) {
-    console.log("let me check that");
 
     //position info
     var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
@@ -43,27 +41,35 @@ LocationAnalyzer.prototype.getGeneralInformation = function (viewer, cartesian) 
         return;
     }
 
-    $( function() {
-     
-        var str = $( "#loca-info" ).first().html( 
-            "Longitude: "+ longitudeString + "<br> "+
-            "Latitude: " + latitudeString + "<br>" +
-            "<h3>Closest Quake</h3>"+
-            "<br> Distance: " + closestQuakeEntity.distance +
-            "<br> Description: " + closestQuakeEntity.ent.name+
-            "<br> Felt by: " + closestQuakeEntity.ent.properties.felt 
-            );
-  
-      } );
+    var mag = undefined;
+    var felt = undefined;
+    if (closestQuakeEntity.ent.properties != undefined){
+        mag = closestQuakeEntity.ent.properties.mag;
+        felt = closestQuakeEntity.ent.properties.felt;
+        $( function() {
+         
+            var str = $( "#loca-info" ).first().html( 
+                "Longitude: "+ longitudeString + "<br> "+
+                "Latitude: " + latitudeString + "<br>" +
+                "<b>Closest Quake</b>"+
+                "<br> Magnitude: " + mag +
+                "<br> Distance: " + closestQuakeEntity.distance.toFixed(2) + "m" + 
+                "<br> Description: " + closestQuakeEntity.ent.name+
+                "<br> Felt by: " + felt
+                );
+      
+          } );
+    
+          //highlight Closest Quake
+          closestQuakeEntity.ent.ellipsoid.material = Cesium.Color.RED.withAlpha(0.3);
+          //zoom to click and quake event
+        //   var bb =new Cesium.AxisAlignedBoundingBox(cartesian, closestQuakeEntity.ent.position.getValue());
+          const destination = Cesium.Rectangle.fromCartesianArray([cartesian, closestQuakeEntity.ent.position.getValue()]);
+          viewer.camera.flyTo({
+            destination,
+          });
+    }
 
-      //highlight Closest Quake
-      closestQuakeEntity.ent.ellipsoid.material = Cesium.Color.RED.withAlpha(0.3);
-      //zoom to click and quake event
-    //   var bb =new Cesium.AxisAlignedBoundingBox(cartesian, closestQuakeEntity.ent.position.getValue());
-      const destination = Cesium.Rectangle.fromCartesianArray([cartesian, closestQuakeEntity.ent.position.getValue()]);
-      viewer.camera.flyTo({
-        destination,
-      });
 }
 
 export default LocationAnalyzer;

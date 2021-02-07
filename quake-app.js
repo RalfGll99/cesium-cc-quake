@@ -11,16 +11,34 @@ $( function() {
   
     $( "#accordion" ).accordion();
   
-    $( "button, input, a" ).click( function( event ) {
+    $( "#a" ).click( function( event ) {
         // buttonHandler.analyzeTopo();
         buttonHandler.assessLocation(viewer);
     } );
+
+    $( "#color-mag" ).click( function( event ) {
+      buttonHandler.colorEllipsoides(viewer, "mag");
+      
+    } );
+    $( "#color-reports" ).click( function( event ) {
+      buttonHandler.colorEllipsoides(viewer, "felt");
+      
+    } );
+    $( "#color-standard" ).click( function( event ) {
+      buttonHandler.colorEllipsoides(viewer, "");
+      
+    } );
+
+
   } );
 
     //setting of variables
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        // terrainProvider: Cesium.createWorldTerrain()
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+          terrainProvider: new Cesium.CesiumTerrainProvider({
+        url: Cesium.IonResource.fromAssetId(1),
+      }),
     });
+    buttonHandler.setLocationHoverEffect(viewer);
 
     dataHandler.loadQuakeData(viewer, "./data/quake.json");
   
